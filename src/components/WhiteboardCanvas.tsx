@@ -20,6 +20,17 @@ function WhiteboardCanvas() {
     setIsDrawing(true);
   };
 
+  const downloadImage = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const link = document.createElement('a');
+      link.download = 'whiteboard.png';
+      link.href = canvas.toDataURL("image/png");
+      // Optionally trigger the download
+      link.click();
+    }
+  }
+
   const draw = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isDrawing) return;
     const { offsetX, offsetY } = event.nativeEvent;
@@ -52,6 +63,7 @@ function WhiteboardCanvas() {
         />
         <button onClick={() => setIsEraser(false)}>✏️ Pen</button>
         <button onClick={() => setIsEraser(true)}>🧽 Eraser</button>
+        <button onClick={downloadImage}>⬇️ Download</button>
       </div>
       <canvas
         ref={canvasRef}
